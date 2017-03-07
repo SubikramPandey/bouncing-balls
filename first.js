@@ -1,23 +1,30 @@
 
-var counter = 0;
-var ballSpeed = 5;  // how fast the ball moves in x direction
+var newX = 0;
+var ballSpeed = 7;  // how fast the ball moves in x direction
 var change = 0;   // use to determine how much the ball shifts in y direction
 var ballArray = [];
 var hits = 1;
 
 function setup() {
-  createCanvas(800, 640);
+  createCanvas(600, 640);
   frameRate = 120;
+ // var mySound = loadSound('assets/turndown.mp3');
+//  mySound.setVolume(1);
+// mySound.play();
 }
 
 function draw() {
   background(0);
-  fill(255);
-  
-  for (var i = ballArray.length - 1; i >= 0; i--) {
-    ballArray[i]
+//  fill(300, 100, 300);
+ // ellipse(updateX(), updateY(), 80, 80);
+ drawBalls();
+}
+
+function drawBalls() {
+  for (var i = 0; i < hits; i++) {
+    ellipse(updateX(), updateY(), 80, 80);
+    fill(50 * i ,  100, 50 * (hits + i));
   };
-  ellipse(updateX(), updateY(), 80, 80);
 }
 
 function updateY() {
@@ -28,16 +35,25 @@ function updateY() {
 }
 
 function updateX(){
-  counter += ballSpeed;
-  if (counter > width || counter < 5 ){
+  newX += ballSpeed;
+  if (newX > width || newX < 5 ){
     wallHitEffects();
+    return newX += ballSpeed
   }
-  return counter
+  return newX
 }
 
 function wallHitEffects() {
-    ballSpeed = -ballSpeed;
-    hits += 1;
+  updateBallSpeed();
+  hits += 1;
+  if (hits > 10) {
+    hits = 1;
     setup();
+  }
+}
+
+function updateBallSpeed(){
+  ballSpeed = -1 * ( ballSpeed + .6);
+  if (ballSpeed > 40) { ballSpeed = 5}
 }
 
