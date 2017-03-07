@@ -1,36 +1,34 @@
 
 /* TO DO
+* figure out why its speeding up so much
 * change the way extra balls are made
 * 
 */
 
-
-var newX = 0;
-var ballSpeed = 8;  // how fast the ball moves in x direction
+var x = 0;
+var xShift = 10;  // how fast the ball moves in x direction
 var change = 0;   // use to determine how much the ball shifts in y direction
-var hits = 0;
-var shapeWidth;
-var shapeHeight;
+var hits;
+var ballWidth;
+var ballHeight;
 var numBalls = 1; // starts with 1 ball
 
 function setup() {
-  createCanvas(600, 800);
+  createCanvas(800, 800);
+  hits = 0;
   frameRate = 120;
-  shapeWidth = 60;
-  shapeHeight = 60;
+  ballWidth = 100;
+  ballHeight = 100;
 }
 
 function draw() {
   background(0);
-//  fill(300, 100, 300);
- // ellipse(updateX(), updateY(), 80, 80);
- drawBalls();
+  drawBalls();
 }
 
 function drawBalls() {
-  numBalls = hits + 1;
   for (var i = 0; i < numBalls; i++) {
-    ellipse(updateX(), updateY(), shapeWidth, shapeHeight);
+    ellipse(updateX(), updateY(), ballWidth, ballHeight);
     fill(50 * i, 200, 50 * (numBalls + i));
   };
 }
@@ -43,31 +41,36 @@ function updateY() {
 }
 
 function updateX(){
-  newX += ballSpeed;
-  if (newX > width || newX < 5 ){
+  x += xShift;
+  if (x > width || x < 5 ){
     wallHitEffects();
-    return newX
   }
-  return newX
+  return x
 }
 
 function wallHitEffects() {
-  updateBallSpeed();
-  hits += 1;
+  updateHits();
+  updatexShift();
   smushBall();
-  if (hits > 10) {
-    hits = 1;
+  numBalls += 1;
+}
+
+function updateHits() {
+  hits += 1;
+  if (hits > 1500) {
     setup();
   }
 }
 
+function updatexShift(){
+if (xShift > 0) {xShift = 0 - xShift;}
+else {xShift = -1 * xShift;}
+if (xShift > 4) { xShift = 5}
+}
+
 function smushBall() {
-  shapeWidth -= 5;
-  shapeHeight += 5;
+  var ajustement = hits;
+  if (hits > 10) {ajustement = 10 / hits}
+  ballWidth -= ajustement;
+  ballHeight += ajustement;
 }
-
-function updateBallSpeed(){
-  ballSpeed = -1 * ( ballSpeed + .01);
-  if (ballSpeed > 40) { ballSpeed = 5}
-}
-
