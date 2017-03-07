@@ -1,11 +1,17 @@
 
+/* TO DO
+* change the way extra balls are made
+* 
+*/
+
+
 var newX = 0;
 var ballSpeed = 8;  // how fast the ball moves in x direction
 var change = 0;   // use to determine how much the ball shifts in y direction
-var ballArray = [];
-var hits = 1;
+var hits = 0;
 var shapeWidth;
 var shapeHeight;
+var numBalls = 1; // starts with 1 ball
 
 function setup() {
   createCanvas(600, 800);
@@ -22,9 +28,10 @@ function draw() {
 }
 
 function drawBalls() {
-  for (var i = 0; i < hits; i++) {
+  numBalls = hits + 1;
+  for (var i = 0; i < numBalls; i++) {
     ellipse(updateX(), updateY(), shapeWidth, shapeHeight);
-    fill(50 * i ,  100, 50 * (hits + i));
+    fill(50 * i, 200, 50 * (numBalls + i));
   };
 }
 
@@ -39,7 +46,7 @@ function updateX(){
   newX += ballSpeed;
   if (newX > width || newX < 5 ){
     wallHitEffects();
-    return newX 
+    return newX
   }
   return newX
 }
@@ -57,7 +64,6 @@ function wallHitEffects() {
 function smushBall() {
   shapeWidth -= 5;
   shapeHeight += 5;
-  
 }
 
 function updateBallSpeed(){
