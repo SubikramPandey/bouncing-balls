@@ -32,25 +32,35 @@ function drawBalls() {
     ellipse(updateX(), updateY(), ballWidth, ballHeight);
     fill(50 * i, 200, 50 * (numBalls + i));
   };
-  if (hits > maxHits) {setup();}
+  if (hits > maxHits) {
+	  setup();
+  }
 }
 
 function updateY() {
   var y = sin(change) * 500 * change  + 100;
   change += .02;
-  if (change > 1.3) { change = - change};
+  if (change > 1.3) { 
+	  change = - change;
+  }
   return y
 }
 
 function updateX(){
   x += xShift;
-  if (hitWall() ) {wallHitEffects();}
+  if (hitWall()){
+	  wallHitEffects();
+  }
   return x
 }
 
 function hitWall() {
-  if (x > width || x < 5) { return true}
-  else {return false}
+  if (x > width || x < 5) { 
+	  return true
+  }
+  else {
+	  return false
+  }
 }
 
 function wallHitEffects() {
@@ -62,7 +72,9 @@ function wallHitEffects() {
 
 function updatexShift(){
   xShift = -1 * xShift;
-  if (xShift > 4) {xShift = 5}
+  if (xShift > 4){
+	  xShift = 5;
+  }
 }
 
 function smushBall() {
@@ -73,6 +85,8 @@ function smushBall() {
 
 function calcAdjustment() {
   var adjustment = hits;
-  if (hits > 10) {adjustment = 10 / hits}
+  if (hits > 10) {
+	  adjustment = 10 / hits;
+  }
   return adjustment
 }
